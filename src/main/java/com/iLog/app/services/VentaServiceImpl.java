@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iLog.app.IServices.IVentaService;
 import com.iLog.app.entities.Venta;
 import com.iLog.app.repositories.VentaRepository;
 

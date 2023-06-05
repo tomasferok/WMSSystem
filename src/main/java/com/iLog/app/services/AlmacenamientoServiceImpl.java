@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iLog.app.IServices.IAlmacenamientoService;
 import com.iLog.app.entities.Almacenamiento;
 import com.iLog.app.repositories.AlmacenamientoRepository;
 

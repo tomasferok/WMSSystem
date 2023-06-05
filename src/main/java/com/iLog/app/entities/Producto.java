@@ -34,6 +34,9 @@ public class Producto implements Serializable{
 	@Column(name = "price", nullable = false)
 	private double price;
 	
+	@Column(name = "descripcion")
+	private String descripcion;
+	
 	@Column(name = "amount", nullable = false)
 	private double amount;
 

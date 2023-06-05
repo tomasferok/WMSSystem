@@ -2,11 +2,12 @@ package com.iLog.app.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iLog.app.IServices.IAlmacenamientoService;
+import com.iLog.app.IServices.IProductoService;
 import com.iLog.app.entities.Almacenamiento;
 import com.iLog.app.entities.Estado;
 import com.iLog.app.entities.Producto;

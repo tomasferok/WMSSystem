@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.iLog.app.IServices.IAlmacenamientoService;
+import com.iLog.app.IServices.IProductoService;
 import com.iLog.app.entities.Almacenamiento;
 import com.iLog.app.entities.Producto;
-import com.iLog.app.services.IAlmacenamientoService;
-import com.iLog.app.services.IProductoService;
 
 
 

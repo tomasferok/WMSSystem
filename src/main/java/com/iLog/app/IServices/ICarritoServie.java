@@ -1,4 +1,4 @@
-package com.iLog.app.services;
+package com.iLog.app.IServices;
 
 import java.util.List;
 

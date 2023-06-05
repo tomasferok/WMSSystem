@@ -6,11 +6,12 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.iLog.app.IServices.IProductoService;
 import com.iLog.app.entities.Almacenamiento;
 import com.iLog.app.entities.Estado;
 import com.iLog.app.entities.Producto;
 import com.iLog.app.repositories.ProductoRepository;
-import com.iLog.app.services.IProductoService;
+
 
 @Component
 public class ProductoHelper {
@@ -24,7 +25,7 @@ public class ProductoHelper {
 		alma.getProds().stream().parallel().forEach(prods -> {
 			// Si el producto pasado por parametro tiene el mismo nombre de uno de los
 			// productos del almacen se le resta la cantidad de ese producto al actual
-			if (producto.getNameProd().equals(prods.getNameProd())) {
+			if (producto.getNameProd().equals(prods.getNameProd()) && producto.getState().equals(prods.getState())) {
 				Producto productoActual = productoServiceImpl.getById(prods.getIdProd());
 				productoActual.setAmount(prods.getAmount() + producto.getAmount());
 				prodServ.save(productoActual);
@@ -46,6 +47,7 @@ public class ProductoHelper {
 		if(producto.getState().equals(Estado.PEDIDO)) {
 			a= this.addPedidoProd(producto, a, alma);
 		}
+		
 		return a;
 	}
 	
