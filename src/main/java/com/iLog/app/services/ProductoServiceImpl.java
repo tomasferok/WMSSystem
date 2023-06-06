@@ -1,10 +1,13 @@
 package com.iLog.app.services;
 
+import java.lang.annotation.Repeatable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.iLog.app.IServices.IAlmacenamientoService;
 import com.iLog.app.IServices.IProductoService;
@@ -13,6 +16,7 @@ import com.iLog.app.entities.Estado;
 import com.iLog.app.entities.Producto;
 import com.iLog.app.helpers.ProductoHelper;
 import com.iLog.app.repositories.ProductoRepository;
+
 
 @Service
 public class ProductoServiceImpl implements IProductoService {
@@ -38,26 +42,32 @@ public class ProductoServiceImpl implements IProductoService {
 	}
 
 	@Override
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public void remove(Long id) {
 
 		prodServ.deleteById(id);
 	}
 
 	@Override
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public Producto save(Producto producto) {
 		// Obtiene el almacenamiento de ese producto en espesifico
 		Almacenamiento alma = almaSrv.getById(producto.getIdAlma());
 		
-		List<Producto> a = new ArrayList();
+		List<Producto> listaProductosAlmacen = new ArrayList();
 		
-		helper.checkStateProd(producto, a, alma);
+		helper.checkStateProd(producto, listaProductosAlmacen, alma);
 		
 			// Si el producto no existe en el almacen se agrega a la lista
-			helper.addProdToListOrNot(producto, a, alma);
-			
-			alma.setProds(a);
+			helper.addProdToListOrNot(producto, listaProductosAlmacen, alma);
+			listaProductosAlmacen.stream().parallel().forEach(prod->{
+				if(prod.getNameProd().equals(producto.getNameProd()) && producto.getAmount()!=prod.getAmount()) {
+					this.remove(producto.getIdProd());
+				}
+			});
+			alma.setProds(listaProductosAlmacen);
 			almaSrv.save(alma);
-			return a.get(0);
+			return listaProductosAlmacen.get(0);
 		}
 			
 	

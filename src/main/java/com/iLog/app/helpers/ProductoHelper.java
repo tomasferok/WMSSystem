@@ -22,33 +22,36 @@ public class ProductoHelper {
 	IProductoService productoServiceImpl;
 	
 	public List<Producto> addNewProdOrIncrement(Producto producto, List<Producto> a, Almacenamiento alma) {
+		
 		alma.getProds().stream().parallel().forEach(prods -> {
 			// Si el producto pasado por parametro tiene el mismo nombre de uno de los
 			// productos del almacen se le resta la cantidad de ese producto al actual
 			if (producto.getNameProd().equals(prods.getNameProd()) && producto.getState().equals(prods.getState())) {
 				Producto productoActual = productoServiceImpl.getById(prods.getIdProd());
 				productoActual.setAmount(prods.getAmount() + producto.getAmount());
-				prodServ.save(productoActual);
+//				prodServ.save(productoActual);
 				a.add(productoActual);
+				
 			} else {
 				// si no coincide con el nombre de uno de los productos del almacen se agregan
 				// los productos del almacen a la lista
 				a.add(prods);
+				
 			}
 
 		});
 		return a;
 
 	}
-	public List<Producto> checkStateProd(Producto producto, List<Producto> a, Almacenamiento alma){
+	public List<Producto> checkStateProd(Producto producto, List<Producto> listaProductosAlmacen, Almacenamiento alma){
 		if (producto.getState().equals(Estado.ENSTOCK)) {
-			a = this.addNewProdOrIncrement(producto, a, alma);
+			listaProductosAlmacen = this.addNewProdOrIncrement(producto, listaProductosAlmacen, alma);
 		}
 		if(producto.getState().equals(Estado.PEDIDO)) {
-			a= this.addPedidoProd(producto, a, alma);
+			listaProductosAlmacen= this.addPedidoProd(producto, listaProductosAlmacen, alma);
 		}
 		
-		return a;
+		return listaProductosAlmacen;
 	}
 	
 	public void addProdToListOrNot (Producto producto, List<Producto> a, Almacenamiento alma) {
@@ -72,7 +75,7 @@ public class ProductoHelper {
 			if (producto.getNameProd().equals(prods.getNameProd())) {
 				Producto productoActual = productoServiceImpl.getById(prods.getIdProd());
 				productoActual.setAmount(prods.getAmount() - producto.getAmount());
-				prodServ.save(productoActual);
+//				prodServ.save(productoActual);
 				a.add(productoActual);
 			} else {
 				

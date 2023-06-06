@@ -12,16 +12,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
+
 
 @Entity
 @Table(name="recepciones")
-@Getter @Setter
-@ToString
-@EqualsAndHashCode
+@Data
 public class Recepcion implements Serializable{
 	
 	/**

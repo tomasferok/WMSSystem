@@ -2,7 +2,6 @@ package com.iLog.app.entities;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -13,16 +12,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
+
 
 @Entity
 @Table(name="carritos")
-@Getter @Setter
-@ToString
-@EqualsAndHashCode
+@Data
 public class Carrito implements Serializable{
 	
 	@Id 

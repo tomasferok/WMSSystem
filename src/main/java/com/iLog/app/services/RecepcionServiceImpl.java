@@ -49,6 +49,7 @@ public class RecepcionServiceImpl implements IRecepcionService{
 		
 		
 		return recepHelper.controlarRecepcion(recepReq);
+		
 	}
 
 	@Override
