@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -31,7 +32,8 @@ public class Recepcion implements Serializable{
 	private Long idRecep;
 	
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	
+	@OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="prods_id")
 	private List<Producto> listaProds;
 	

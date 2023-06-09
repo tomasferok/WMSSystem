@@ -28,7 +28,7 @@ public class Almacenamiento implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="prod_id")
 	private List<Producto> prods;
 	

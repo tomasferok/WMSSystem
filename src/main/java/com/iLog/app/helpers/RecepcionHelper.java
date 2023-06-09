@@ -1,6 +1,7 @@
 package com.iLog.app.helpers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -30,16 +31,20 @@ public class RecepcionHelper {
 		estado.set(false);
 		mensaje.set("-");
 		i.set(0);
+	
 		recep.getListaProds().stream().forEach((prod) ->{
 			if(controlReq.getListProds().contains(prod)&&controlReq.getListProds().get(i.get()).getAmount() == prod.getAmount()) {
+		    
+				if(this.cambiarElAmountSiExisteElStock(prod)) {
+					
+				}else {
+					prod.setState(Estado.ENSTOCK);
+					prod.setIdAlma(1l);
+					prodServ.save(prod);
+					
+					i.set(i.get()+1);
+				}
 				
-//				Producto productRecep = prodServ.getById(prod.getIdProd());
-//				productRecep.setState(Estado.ENSTOCK);
-//				productRecep.setIdAlma(1l);
-				prod.setState(Estado.ENSTOCK);
-				prod.setIdAlma(1l);
-				prodServ.save(prod);
-				i.set(i.get()+1);
 			}else {
 				mensaje.set(mensaje.get() + "El producto " + prod.getNameProd() + " tiene diferencias en su stock, ");
 				recep.setDescripEstado(mensaje.get());
@@ -67,6 +72,20 @@ public class RecepcionHelper {
 		return (HashMap<String, Object>) response;
 	}
 	
+	public boolean cambiarElAmountSiExisteElStock(Producto productoEnRecepcion){
+		List<Producto>ListaDeTodosLosProductos= prodServ.getAll();
+		AtomicReference<Boolean>actualizarCantidad=new AtomicReference<Boolean>();
+		actualizarCantidad.set(false);
+		ListaDeTodosLosProductos.stream().parallel().forEach(productosEnLista->{
+			if(productosEnLista.getNameProd().equals(productoEnRecepcion.getNameProd())&& productosEnLista.getState().equals(Estado.ENSTOCK)) {
+				productosEnLista.setAmount(productosEnLista.getAmount()+productoEnRecepcion.getAmount());
+				prodServ.save(productosEnLista);
+				prodServ.remove(productoEnRecepcion.getIdProd());
+				actualizarCantidad.set(true);
+			}
+		});
+		return actualizarCantidad.get();
+	}
 	
 	public void confirmRecep(ControlarRecepcionRequest controlReq) {
 		Recepcion recep = recepServ.getById(controlReq.getIdRecep());
