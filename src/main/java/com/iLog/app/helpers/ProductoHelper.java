@@ -54,20 +54,13 @@ public class ProductoHelper {
 		return listaProductosAlmacen;
 	}
 	
-	public void addProdToListOrNot (Producto producto, List<Producto> a, Almacenamiento alma) {
-		AtomicReference<Boolean> enter = new AtomicReference<Boolean>();
-		alma.getProds().stream()
-		.forEach(p ->{
-			String nombreProductoParam = producto.getNameProd();
-			String nombreRecorrido = p.getNameProd();
-			if(nombreRecorrido.equals(nombreProductoParam)){
-				enter.set(true);
-			}
-		});
-		
-	if(enter.get()== null) {
-		a.add(producto);
-	}
+	public void addProdToListOrNot(Producto producto, List<Producto> a, Almacenamiento alma) {
+	    boolean enter = alma.getProds().stream()
+	            .anyMatch(p -> p.getNameProd().equals(producto.getNameProd()));
+
+	    if (!enter) {
+	        a.add(producto);
+	    }
 	}
 	public List<Producto> addPedidoProd(Producto producto, List<Producto> a, Almacenamiento alma){
 		alma.getProds().stream().parallel().forEach(prods -> {
