@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.iLog.app.entities.Proveedor;
 
 public interface ProveedorRepository extends JpaRepository<Proveedor, Long>{
-
+	Proveedor findByDocumento(int documento);
 }

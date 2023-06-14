@@ -27,13 +27,16 @@ public class Proveedor implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idProv;
 	
-	@Column(nullable = false, unique = true, length = 32)
+	@Column(name="documento", unique=true)
+	private int documento;
+	
+	@Column(nullable = false, length = 32)
 	private String nombreProv;
 
 	@Column(nullable = false)
 	private String contacto;
 
-	@Column(nullable = false, unique = true, length = 32)
+	@Column(nullable = false, length = 32)
 	private String email;
 
 	

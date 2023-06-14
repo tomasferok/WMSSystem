@@ -39,4 +39,10 @@ public class ProveedorServiceImpl implements IProveedorService {
 		return provedorServicios.save(prov);
 	}
 
+	@Override
+	public Proveedor findByDocument(int documento) {
+		// TODO Auto-generated method stub
+		return provedorServicios.findByDocumento(documento);
+	}
+
 }

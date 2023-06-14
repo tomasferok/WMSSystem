@@ -12,4 +12,5 @@ import com.iLog.app.entities.Producto;
 public interface ProductoRepository extends CrudRepository<Producto, Long>{
 	Producto findByNameProd(String nameProd);
 	Producto findByNameProdAndState(String nameProd, Estado e);
+	List<Producto> findByIdAlma(Long idAlma);
 }

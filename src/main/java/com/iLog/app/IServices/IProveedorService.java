@@ -8,4 +8,5 @@ public interface IProveedorService {
 	Proveedor getById(Long id);
 	void remove(Long id);
 	Proveedor save( Proveedor prov);
+	Proveedor findByDocument(int documento);
 }

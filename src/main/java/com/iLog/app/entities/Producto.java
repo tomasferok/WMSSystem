@@ -34,6 +34,9 @@ public class Producto implements Serializable{
 	
 	@Column(name = "amount", nullable = false)
 	private double amount;
+	
+	@Column(name = "barcode")
+	private String codigoDeBarras;
 
 	private Estado state;
 	

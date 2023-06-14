@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -15,6 +16,7 @@ import com.iLog.app.IServices.IProductoService;
 import com.iLog.app.entities.Almacenamiento;
 import com.iLog.app.entities.Estado;
 import com.iLog.app.entities.Producto;
+import com.iLog.app.helpers.GenerarEtiquetaHelper;
 import com.iLog.app.helpers.ProductoHelper;
 import com.iLog.app.repositories.ProductoRepository;
 
@@ -29,7 +31,9 @@ public class ProductoServiceImpl implements IProductoService {
 	IAlmacenamientoService almaSrv;
 	@Autowired
 	ProductoHelper helper;
-    
+    @Autowired
+    GenerarEtiquetaHelper helperEtiqueta;
+	
 	@Override
 	public List<Producto> getAll() {
 		// TODO Auto-generated method stub
@@ -84,6 +88,18 @@ public class ProductoServiceImpl implements IProductoService {
 	public Producto findByNameProdAndState(String nombreProd, Estado e) {
 		// TODO Auto-generated method stub
 		return prodServ.findByNameProdAndState(nombreProd, e);
+	}
+
+	@Override
+	public List<Producto> findByIdAlma(Long idAlma) {
+		// TODO Auto-generated method stub
+		return prodServ.findByIdAlma(idAlma);
+	}
+
+	@Override
+	public ResponseEntity<byte[]> generarEtiquetas(List<Producto> prods) {
+		// TODO Auto-generated method stub
+		return helperEtiqueta.generarCodigosDeBarra(prods);
 	}
 	
 

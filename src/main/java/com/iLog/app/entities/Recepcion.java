@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -31,7 +32,8 @@ public class Recepcion implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idRecep;
 	
-	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Proveedor proveedor;
 	
 	@OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="prods_id")

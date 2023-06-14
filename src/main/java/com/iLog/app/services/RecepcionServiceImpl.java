@@ -10,6 +10,7 @@ import com.iLog.app.IServices.IRecepcionService;
 import com.iLog.app.entities.Recepcion;
 import com.iLog.app.helpers.RecepcionHelper;
 import com.iLog.app.helpers.request.ControlarRecepcionRequest;
+import com.iLog.app.repositories.ProveedorRepository;
 import com.iLog.app.repositories.RecepcionRepository;
 
 @Service
@@ -19,7 +20,8 @@ public class RecepcionServiceImpl implements IRecepcionService{
 	RecepcionRepository recepcionServ;
 	@Autowired
 	RecepcionHelper recepHelper;
-	
+	@Autowired
+	ProveedorRepository provServ;
 	@Override
 	public List<Recepcion> getAll() {
 		// TODO Auto-generated method stub
@@ -41,6 +43,7 @@ public class RecepcionServiceImpl implements IRecepcionService{
 	@Override
 	public Recepcion save(Recepcion recep) {
 		// TODO Auto-generated method stub
+		provServ.flush();
 		return recepcionServ.save(recep);
 	}
 
