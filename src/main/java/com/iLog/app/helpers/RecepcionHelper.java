@@ -33,24 +33,16 @@ public class RecepcionHelper {
 		i.set(0);
 	
 		recep.getListaProds().stream().forEach((prod) ->{
-			if(controlReq.getListProds().contains(prod)&&controlReq.getListProds().get(i.get()).getAmount() == prod.getAmount()) {
-		    
-				if(this.cambiarElAmountSiExisteElStock(prod)) {
-					
-				}else {
-					prod.setState(Estado.ENSTOCK);
-					prod.setIdAlma(1l);
-					prodServ.save(prod);
-					
-					i.set(i.get()+1);
-				}
-				
-			}else {
+			
+		if(this.checkearSiElProductoExisteYLaCantidadCoincide(prod, controlReq, i.get())) {
 				mensaje.set(mensaje.get() + "El producto " + prod.getNameProd() + " tiene diferencias en su stock, ");
 				recep.setDescripEstado(mensaje.get());
 				estado.set(true);
 				i.set(i.get()+1);
 			}
+		else {
+			i.set(i.get()+1);
+		}
 		}
 		
 		
@@ -70,6 +62,26 @@ public class RecepcionHelper {
 		}
 		
 		return (HashMap<String, Object>) response;
+	}
+	
+	private boolean checkearSiElProductoExisteYLaCantidadCoincide(Producto prod, ControlarRecepcionRequest controlReq, Integer i) {
+		if(controlReq.getListProds().contains(prod)&&controlReq.getListProds().get(i).getAmount() == prod.getAmount()) {
+		    
+			if(this.cambiarElAmountSiExisteElStock(prod)) {
+				
+			}else {
+				prod.setState(Estado.ENSTOCK);
+				
+				prodServ.save(prod);
+				
+				
+			}
+			return false;
+		}else {
+			return true;
+		}
+		
+		
 	}
 	
 	public boolean cambiarElAmountSiExisteElStock(Producto productoEnRecepcion){
@@ -95,7 +107,7 @@ public class RecepcionHelper {
 			if(controlReq.getListProds().get(i.get()).getNameProd().equals(prod.getNameProd())) {
 			prod.setAmount(controlReq.getListProds().get(i.get()).getAmount());
 			prod.setState(Estado.ENSTOCK);
-			prod.setIdAlma(1l);
+			
 			prodServ.save(prod);
 			}
 			i.set(i.get()+ 1);
